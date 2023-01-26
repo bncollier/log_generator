@@ -1,0 +1,53 @@
+name: BlueCoat
+file: /var/log/webproxy/bluecoat
+format: "{log_date} {log_time} {elapsedtime} {log_ip} {log_status} {log_cache} {bytesrec} {bytessent} GET https {url2} {url2} {user} - {url2} {type} \"{useragent}\" {deviceaction} Content%20Delivery%20Networks - 192.168.100.10 https.forward-proxy"
+frequency:
+  seconds: 25
+offset:
+  seconds: 0
+jitter:
+  seconds: 50000
+amount: 25
+fields:
+  log_ip:
+    type: enum
+    values: [192.168.10.123]
+  log_date:
+    type: timestamp
+    format: "%Y-%m-%d"
+  log_time:
+    type: timestamp
+    format: "%H:%M:%S"
+  log_cache:
+    type: enum
+    values: [TCP_MISS, TCP_HIT, TCP_NC_MISS, TCP_REFRESH_MISS]
+  log_status:
+    type: enum
+    values: [200, 201, 204, 300, 301, 400, 401, 403, 404, 500, 503]
+  elapsedtime:
+    type: integer
+    min: 1000
+    max: 9000
+  bytessent:
+    type: integer
+    min: 100
+    max: 90000
+  bytesrec:
+    type: integer
+    min: 100
+    max: 90000
+  url2:
+    type: enum
+    values: [https://www.youtube.com, https://www.facebook.com, https://www.securonix.com, https://www.cisco.com]
+  user:
+    type: enum
+    values: [dileep]
+  useragent:
+    type: enum
+    values: [Mozilla/5.0 (Linux; Android 12; SM-S906N Build/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML like Gecko) Version/4.0 Chrome/80.0.3987.119 Mobile Safari/537.36, Mozilla/5.0 (Linux; Android 12; Pixel 6 Build/SD1A.210817.023; wv) AppleWebKit/537.36 (KHTML like Gecko) Version/4.0 Chrome/94.0.4606.71 Mobile Safari/537.36, Mozilla/5.0 (iPhone146; U; CPU iPhone OS 15_4 like Mac OS X) AppleWebKit/602.1.50 (KHTML like Gecko) Version/10.0 Mobile/19E241 Safari/602.1, Mozilla/5.0 (iPhone143; U; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/602.1.50 (KHTML like Gecko) Version/10.0 Mobile/19A346 Safari/602.1, Mozilla/5.0 (X11; CrOS x86_64 8172.45.0) AppleWebKit/537.36 (KHTML like Gecko) Chrome/51.0.2704.64 Safari/537.36, Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML like Gecko) Version/9.0.2 Safari/601.3.9, Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1]
+  type:
+    type: enum
+    values: [image/jpg, text/csv, text/html, application/json]
+  deviceaction:
+    type: enum
+    values: [denied, observed, proxied]
